@@ -1,0 +1,57 @@
+﻿@model Gestional;
+
+@{
+    ViewBag.Title = "Tickets Gestional";
+}
+
+<div class="text-center">
+    <h1 class="display-4">EpiCinema</h1>
+
+    <div class="text-start">
+        <a class="btn btn-primary" asp-controller="Ticket" asp-action="Sell">Sell ticket</a>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3>Sala Nord</h3>
+
+            @if (Model.NorthHall.Count > 0)
+            {
+                <h5>@Model.NorthHall.Count</h5>
+            }
+            else
+            {
+                <h5>No tickets sold for this hall</h5>
+            }
+
+        </div>
+
+        <div class="col">
+            <h3>Sala Est</h3>
+
+            @if (Model.EastHall.Count > 0)
+            {
+                <h5>@Model.EastHall.Count</h5>
+            }
+            else
+            {
+                <h5>No tickets sold for this hall</h5>
+            }
+
+        </div>
+
+        <div class="col">
+            <h3>Sala Sud</h3>
+
+            @if (Model.SouthHall.Count > 0)
+            {
+                <h5>@Model.SouthHall.Count</h5>
+            }
+            else
+            {
+                <h5>No tickets sold for this hall</h5>
+            }
+
+        </div>
+    </div>
+</div>

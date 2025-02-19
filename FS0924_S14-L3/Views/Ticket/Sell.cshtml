@@ -1,0 +1,51 @@
+﻿@model SellTicketModel;
+
+@{
+    ViewBag.Title = "Ticket Managment";
+}
+
+<div>
+    <h2>Ticket Managment</h2>
+
+    <h4>Sell a ticket</h4>
+
+    <div>
+        <form method="post" asp-controller="Ticket" asp-action="SellTicket" class="w-25">
+            <div>
+                <label for="name" class="form-label" asp-for="Name"></label>
+                <input id="name" class="form-control" asp-for="Name" />
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <div>
+                <label for="surname" class="form-label" asp-for="Surname"></label>
+                <input id="surname" class="form-control" asp-for="Surname" />
+                <span class="text-danger" asp-validation-for="Surname"></span>
+            </div>
+
+            <div>
+                <label for="hall" class="form-label" asp-for="Hall"></label>
+                <select id="hall" class="form-select" asp-for="Hall">
+                    <option selected value="">Open this select menu</option>
+                    <option value="North Hall">North Hall</option>
+                    <option value="East Hall">East Hall</option>
+                    <option value="South Hall">South Hall</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Hall"></span>
+            </div>
+
+            <div>
+                <input id="ticketType" type="checkbox" class="form-check-input" />
+                <label for="ticketType" class="form-label" asp-for="IsReduced"></label>
+            </div>
+
+            <div>
+                <button class="btn btn-primary">Sell Ticket</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
