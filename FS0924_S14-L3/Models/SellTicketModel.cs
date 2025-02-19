@@ -21,5 +21,7 @@ namespace FS0924_S14_L3.Models
 
         [Display(Name = "Reduced ticket")]
         public bool? IsReduced { get; set; } = false;
+
+        public string? IsReducedStr { get; set; } = "";
     }
 }

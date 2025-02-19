@@ -6,6 +6,6 @@
         public string? Name { get; set; }
         public string? Surname { get; set; }
         public string? Hall { get; set; }
-        public bool? IsReduced { get; set; } = false;
+        public bool IsReduced { get; set; } = false;
     }
 }

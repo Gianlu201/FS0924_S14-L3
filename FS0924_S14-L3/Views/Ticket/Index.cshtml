@@ -2,22 +2,38 @@
 
 @{
     ViewBag.Title = "Tickets Gestional";
+
+    string northHallCount = Model.NorthHall.Count > 0 ? $"{Model.NorthHall.Count}" : "";
+    string eastHallCount = Model.EastHall.Count > 0 ? $"{Model.EastHall.Count}" : "";
+    string southHallCount = Model.SouthHall.Count > 0 ? $"{Model.SouthHall.Count}" : "";
+
 }
 
 <div class="text-center">
     <h1 class="display-4">EpiCinema</h1>
 
-    <div class="text-start">
+    <div class="text-start my-3">
         <a class="btn btn-primary" asp-controller="Ticket" asp-action="Sell">Sell ticket</a>
     </div>
 
     <div class="row">
-        <div class="col">
-            <h3>Sala Nord</h3>
+        <div class="col mx-4 py-2 border border-1 border-black rounded-3">
+            <h3>North Hall</h3>
 
             @if (Model.NorthHall.Count > 0)
             {
-                <h5>@Model.NorthHall.Count</h5>
+                <div class="text-start px-3">
+                    <div class="text-end">
+                        <p>@northHallCount/120</p>
+                    </div>
+
+                    <ul>
+                        @foreach (var ticket in Model.NorthHall)
+                        {
+                            <li class="@Model.GetTicketType(ticket.IsReduced)">@ticket.Name @ticket.Surname</li>
+                        }
+                    </ul>
+                </div>
             }
             else
             {
@@ -26,12 +42,23 @@
 
         </div>
 
-        <div class="col">
-            <h3>Sala Est</h3>
+        <div class="col mx-4 py-2 border border-1 border-black rounded-3">
+            <h3>East Hall</h3>
 
             @if (Model.EastHall.Count > 0)
             {
-                <h5>@Model.EastHall.Count</h5>
+                <div class="text-start px-3">
+                    <div class="text-end">
+                        <p>@eastHallCount/120</p>
+                    </div>
+
+                    <ul>
+                        @foreach (var ticket in Model.EastHall)
+                        {
+                            <li class="@Model.GetTicketType(ticket.IsReduced)">@ticket.Name @ticket.Surname</li>
+                        }
+                    </ul>
+                </div>
             }
             else
             {
@@ -40,12 +67,23 @@
 
         </div>
 
-        <div class="col">
-            <h3>Sala Sud</h3>
+        <div class="col mx-4 py-2 border border-1 border-black rounded-3">
+            <h3>South Hall</h3>
 
             @if (Model.SouthHall.Count > 0)
             {
-                <h5>@Model.SouthHall.Count</h5>
+                <div class="text-start px-3">
+                    <div class="text-end">
+                        <p>@southHallCount/120</p>
+                    </div>
+
+                    <ul>
+                        @foreach (var ticket in Model.SouthHall)
+                        {
+                            <li class="@Model.GetTicketType(ticket.IsReduced)">@ticket.Name @ticket.Surname</li>
+                        }
+                    </ul>
+                </div>
             }
             else
             {
@@ -55,3 +93,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

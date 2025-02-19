@@ -34,27 +34,38 @@ namespace FS0924_S14_L3.Controllers
                 //return RedirectToAction("Sell");
             }
 
+            var reduced = sellTicketModel.IsReducedStr == "true" ? true : false;
+
             var newTicket = new Ticket()
             {
                 Id = Guid.NewGuid(),
                 Name = sellTicketModel.Name,
                 Surname = sellTicketModel.Surname,
                 Hall = sellTicketModel.Hall,
-                IsReduced = sellTicketModel.IsReduced,
+                IsReduced = reduced,
             };
 
             switch (sellTicketModel.Hall)
             {
                 case "North Hall":
-                    northHall.Add(newTicket);
+                    if (northHall.Count < 120)
+                    {
+                        northHall.Add(newTicket);
+                    }
                     break;
 
                 case "East Hall":
-                    eastHall.Add(newTicket);
+                    if (eastHall.Count < 120)
+                    {
+                        eastHall.Add(newTicket);
+                    }
                     break;
 
                 case "South Hall":
-                    southHall.Add(newTicket);
+                    if (southHall.Count < 120)
+                    {
+                        southHall.Add(newTicket);
+                    }
                     break;
 
                 default:

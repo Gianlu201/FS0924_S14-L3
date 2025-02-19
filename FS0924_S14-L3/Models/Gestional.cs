@@ -5,5 +5,10 @@
         public List<Ticket> NorthHall { get; set; } = [];
         public List<Ticket> EastHall { get; set; } = [];
         public List<Ticket> SouthHall { get; set; } = [];
+
+        public string GetTicketType(bool val)
+        {
+            return val ? "text-warning" : "text-black";
+        }
     }
 }
