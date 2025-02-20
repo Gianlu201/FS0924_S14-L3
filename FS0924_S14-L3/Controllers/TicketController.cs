@@ -1,4 +1,5 @@
-﻿using FS0924_S14_L3.Models;
+﻿using System.Net.Sockets;
+using FS0924_S14_L3.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FS0924_S14_L3.Controllers
@@ -122,6 +123,76 @@ namespace FS0924_S14_L3.Controllers
                     {
                         TempData["Error"] = "Hall is full!";
                         return RedirectToAction("Sell");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("Ticket/Edit/{hall}/{id:guid}")]
+        public IActionResult Edit(string hall, Guid id)
+        {
+            Ticket? selectedTicket;
+            switch (hall)
+            {
+                case "NorthHall":
+                    selectedTicket = gestional?.NorthHall?.TicketsList?.FirstOrDefault(t =>
+                        t.Id == id
+                    );
+
+                    if (selectedTicket != null)
+                    {
+                        var ticket = new EditTicketModel()
+                        {
+                            Name = selectedTicket.Name,
+                            Surname = selectedTicket.Surname,
+                            Hall = selectedTicket.Hall,
+                            IsReduced = selectedTicket.IsReduced,
+                        };
+
+                        return View(ticket);
+                    }
+                    break;
+
+                case "EastHall":
+                    selectedTicket = gestional?.EastHall?.TicketsList?.FirstOrDefault(t =>
+                        t.Id == id
+                    );
+
+                    if (selectedTicket != null)
+                    {
+                        var ticket = new EditTicketModel()
+                        {
+                            Name = selectedTicket.Name,
+                            Surname = selectedTicket.Surname,
+                            Hall = selectedTicket.Hall,
+                            IsReduced = selectedTicket.IsReduced,
+                        };
+
+                        return View(ticket);
+                    }
+                    break;
+
+                case "SouthHall":
+                    selectedTicket = gestional?.SouthHall?.TicketsList?.FirstOrDefault(t =>
+                        t.Id == id
+                    );
+
+                    if (selectedTicket != null)
+                    {
+                        var ticket = new EditTicketModel()
+                        {
+                            Name = selectedTicket.Name,
+                            Surname = selectedTicket.Surname,
+                            Hall = selectedTicket.Hall,
+                            IsReduced = selectedTicket.IsReduced,
+                        };
+
+                        return View(ticket);
                     }
                     break;
 
