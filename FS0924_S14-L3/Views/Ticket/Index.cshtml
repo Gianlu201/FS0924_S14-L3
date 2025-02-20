@@ -2,11 +2,6 @@
 
 @{
     ViewBag.Title = "Tickets Gestional";
-
-    string northHallCount = Model.NorthHall.Count > 0 ? $"{Model.NorthHall.Count}" : "";
-    string eastHallCount = Model.EastHall.Count > 0 ? $"{Model.EastHall.Count}" : "";
-    string southHallCount = Model.SouthHall.Count > 0 ? $"{Model.SouthHall.Count}" : "";
-
 }
 
 <div class="text-center">
@@ -17,77 +12,114 @@
     </div>
 
     <div class="row">
-        <div class="col mx-4 py-2 border border-1 border-black rounded-3">
+        <div class="col mx-4 py-3 pb-4 border border-1 border-black rounded-3">
             <h3>North Hall</h3>
 
-            @if (Model.NorthHall.Count > 0)
+            @if (Model.NorthHall?.TicketsList?.Count > 0)
             {
                 <div class="text-start px-3">
-                    <div class="text-end">
-                        <p>@northHallCount/120</p>
+                    <div class="d-flex justify-content-between">
+                        <p><b>@Model.NorthHall.TicketsList.Count</b>/120</p>
+                        @if (Model.NorthHall?.ReducedTicketsCount > 0)
+                        {
+                            <p>@Model.NorthHall?.ReducedTicketsCount reduced tickets</p>
+                        }
                     </div>
 
-                    <ul>
-                        @foreach (var ticket in Model.NorthHall)
+                    <div class="row gap-1 justify-content-center">
+                        @for(int i = 0; i<120; i++)
                         {
-                            <li class="@Model.GetTicketType(ticket.IsReduced)">@ticket.Name @ticket.Surname</li>
+                            if (Model?.NorthHall?.TicketsList.Count > i && !string.IsNullOrEmpty(Model?.NorthHall?.TicketsList[i].Name))
+                            {
+                                string bgColor = Model.NorthHall.TicketsList[i].IsReduced ? "bg-warning" : "bg-info";
+                                <div class="col-1 border border-1 rounded-3 @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.NorthHall.TicketsList[i].Name @Model.NorthHall.TicketsList[i].Surname"></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 border border-1 rounded-3 bg-secondary bg-opacity-10" style="aspect-ratio: 1/1"></div>
+                            }
                         }
-                    </ul>
+                    </div>
                 </div>
             }
             else
             {
-                <h5>No tickets sold for this hall</h5>
+                <h5 class="mt-4">No tickets sold for this hall</h5>
             }
 
         </div>
 
-        <div class="col mx-4 py-2 border border-1 border-black rounded-3">
+        <div class="col mx-4 py-3 pb-4 border border-1 border-black rounded-3">
             <h3>East Hall</h3>
 
-            @if (Model.EastHall.Count > 0)
+            @if (Model.EastHall?.TicketsList?.Count > 0)
             {
                 <div class="text-start px-3">
-                    <div class="text-end">
-                        <p>@eastHallCount/120</p>
+                    <div class="d-flex justify-content-between">
+                        <p><b>@Model.EastHall.TicketsList.Count</b>/120</p>
+                            @if (Model.EastHall?.ReducedTicketsCount > 0)
+                            {
+                                <p>@Model.EastHall?.ReducedTicketsCount reduced tickets</p>
+                            }
+                        
                     </div>
 
-                    <ul>
-                        @foreach (var ticket in Model.EastHall)
+                    <div class="row gap-1 justify-content-center">
+                        @for (int i = 0; i < 120; i++)
                         {
-                            <li class="@Model.GetTicketType(ticket.IsReduced)">@ticket.Name @ticket.Surname</li>
+                            if (Model?.EastHall?.TicketsList.Count > i && !string.IsNullOrEmpty(Model?.EastHall?.TicketsList[i].Name))
+                            {
+                                string bgColor = Model.EastHall.TicketsList[i].IsReduced ? "bg-warning" : "bg-info";
+                                <div class="col-1 border border-1 rounded-3 @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.EastHall.TicketsList[i].Name @Model.EastHall.TicketsList[i].Surname"></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 border border-1 rounded-3 bg-secondary bg-opacity-10" style="aspect-ratio: 1/1"></div>
+                            }
                         }
-                    </ul>
+                    </div>
                 </div>
             }
             else
             {
-                <h5>No tickets sold for this hall</h5>
+                <h5 class="mt-4">No tickets sold for this hall</h5>
             }
 
         </div>
 
-        <div class="col mx-4 py-2 border border-1 border-black rounded-3">
+        <div class="col mx-4 py-3 pb-4 border border-1 border-black rounded-3">
             <h3>South Hall</h3>
 
-            @if (Model.SouthHall.Count > 0)
+            @if (Model.SouthHall?.TicketsList?.Count > 0)
             {
                 <div class="text-start px-3">
-                    <div class="text-end">
-                        <p>@southHallCount/120</p>
+                    <div class="d-flex justify-content-between">
+                        <p><b>@Model.SouthHall.TicketsList.Count</b>/120</p>
+                        @if (Model.SouthHall?.ReducedTicketsCount > 0)
+                        {
+                            <p>@Model.SouthHall?.ReducedTicketsCount reduced tickets</p>
+                        }
                     </div>
 
-                    <ul>
-                        @foreach (var ticket in Model.SouthHall)
+                    <div class="row gap-1 justify-content-center">
+                        @for (int i = 0; i < 120; i++)
                         {
-                            <li class="@Model.GetTicketType(ticket.IsReduced)">@ticket.Name @ticket.Surname</li>
+                            if (Model?.SouthHall?.TicketsList.Count > i && !string.IsNullOrEmpty(Model?.SouthHall?.TicketsList[i].Name))
+                            {
+                                string bgColor = Model.SouthHall.TicketsList[i].IsReduced ? "bg-warning" : "bg-info";
+                                <div class="col-1 border border-1 rounded-3 @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.SouthHall.TicketsList[i].Name @Model.SouthHall.TicketsList[i].Surname"></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 border border-1 rounded-3 bg-secondary bg-opacity-10" style="aspect-ratio: 1/1"></div>
+                            }
                         }
-                    </ul>
+                    </div>
                 </div>
             }
             else
             {
-                <h5>No tickets sold for this hall</h5>
+                <h5 class="mt-4">No tickets sold for this hall</h5>
             }
 
         </div>

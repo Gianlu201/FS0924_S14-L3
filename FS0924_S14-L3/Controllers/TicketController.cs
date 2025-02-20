@@ -5,19 +5,60 @@ namespace FS0924_S14_L3.Controllers
 {
     public class TicketController : Controller
     {
-        public static List<Ticket> northHall = new List<Ticket>();
-        public static List<Ticket> eastHall = new List<Ticket>();
-        public static List<Ticket> southHall = new List<Ticket>();
-
         public static Gestional gestional = new Gestional()
         {
-            NorthHall = northHall,
-            EastHall = eastHall,
-            SouthHall = southHall,
+            NorthHall = new Hall()
+            {
+                Name = "North Hall",
+                TicketsList = [],
+                ReducedTicketsCount = 0,
+            },
+            EastHall = new Hall()
+            {
+                Name = "East Hall",
+                TicketsList = [],
+                ReducedTicketsCount = 0,
+            },
+            SouthHall = new Hall()
+            {
+                Name = "South Hall",
+                TicketsList = [],
+                ReducedTicketsCount = 0,
+            },
         };
 
         public IActionResult Index()
         {
+            int counter = 0;
+            foreach (var tic in gestional.NorthHall.TicketsList)
+            {
+                if (tic.IsReduced)
+                {
+                    counter++;
+                }
+            }
+            gestional.NorthHall.ReducedTicketsCount = counter;
+
+            counter = 0;
+            foreach (var tic in gestional.EastHall.TicketsList)
+            {
+                if (tic.IsReduced)
+                {
+                    counter++;
+                }
+            }
+            gestional.EastHall.ReducedTicketsCount = counter;
+
+            counter = 0;
+            foreach (var tic in gestional.SouthHall.TicketsList)
+            {
+                if (tic.IsReduced)
+                {
+                    counter++;
+                }
+            }
+            gestional.SouthHall.ReducedTicketsCount = counter;
+
             return View(gestional);
         }
 
@@ -31,7 +72,8 @@ namespace FS0924_S14_L3.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //return RedirectToAction("Sell");
+                TempData["ModelError"] = "Something went wrong, check your data!";
+                return RedirectToAction("Sell");
             }
 
             var reduced = sellTicketModel.IsReducedStr == "true" ? true : false;
@@ -48,23 +90,38 @@ namespace FS0924_S14_L3.Controllers
             switch (sellTicketModel.Hall)
             {
                 case "North Hall":
-                    if (northHall.Count < 120)
+                    if (gestional.NorthHall?.TicketsList?.Count < 120)
                     {
-                        northHall.Add(newTicket);
+                        gestional.NorthHall?.TicketsList?.Add(newTicket);
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Hall is full!";
+                        return RedirectToAction("Sell");
                     }
                     break;
 
                 case "East Hall":
-                    if (eastHall.Count < 120)
+                    if (gestional.EastHall?.TicketsList?.Count < 120)
                     {
-                        eastHall.Add(newTicket);
+                        gestional.EastHall?.TicketsList?.Add(newTicket);
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Hall is full!";
+                        return RedirectToAction("Sell");
                     }
                     break;
 
                 case "South Hall":
-                    if (southHall.Count < 120)
+                    if (gestional.SouthHall?.TicketsList?.Count < 120)
                     {
-                        southHall.Add(newTicket);
+                        gestional.SouthHall?.TicketsList?.Add(newTicket);
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Hall is full!";
+                        return RedirectToAction("Sell");
                     }
                     break;
 

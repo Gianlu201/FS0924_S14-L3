@@ -2,9 +2,9 @@
 {
     public class Gestional
     {
-        public List<Ticket> NorthHall { get; set; } = [];
-        public List<Ticket> EastHall { get; set; } = [];
-        public List<Ticket> SouthHall { get; set; } = [];
+        public Hall? NorthHall { get; set; }
+        public Hall? EastHall { get; set; }
+        public Hall? SouthHall { get; set; }
 
         public string GetTicketType(bool val)
         {
