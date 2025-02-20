@@ -202,5 +202,12 @@ namespace FS0924_S14_L3.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost()]
+        public IActionResult EditTicket(SellTicketModel sellTicketModel)
+        {
+            // TODO implementare modifica biglietto
+            return RedirectToAction("Index");
+        }
     }
 }

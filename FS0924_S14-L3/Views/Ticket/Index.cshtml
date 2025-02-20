@@ -72,7 +72,9 @@
                             if (Model?.EastHall?.TicketsList.Count > i && !string.IsNullOrEmpty(Model?.EastHall?.TicketsList[i].Name))
                             {
                                 string bgColor = Model.EastHall.TicketsList[i].IsReduced ? "bg-warning" : "bg-info";
-                                <div class="col-1 border border-1 rounded-3 @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.EastHall.TicketsList[i].Name @Model.EastHall.TicketsList[i].Surname"></div>
+                                <div class="d-block col-1 border border-1 rounded-3 overflow-hidden @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.EastHall.TicketsList[i].Name @Model.EastHall.TicketsList[i].Surname">
+                                    <a class="d-inline-block h-100 px-5" asp-controller="Ticket" asp-action="Edit" asp-route-hall="EastHall" asp-route-id="@Model.EastHall.TicketsList[i].Id">&nbsp;</a>
+                                </div>
                             }
                             else
                             {
@@ -109,7 +111,9 @@
                             if (Model?.SouthHall?.TicketsList.Count > i && !string.IsNullOrEmpty(Model?.SouthHall?.TicketsList[i].Name))
                             {
                                 string bgColor = Model.SouthHall.TicketsList[i].IsReduced ? "bg-warning" : "bg-info";
-                                <div class="col-1 border border-1 rounded-3 @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.SouthHall.TicketsList[i].Name @Model.SouthHall.TicketsList[i].Surname"></div>
+                                <div class="d-block col-1 border border-1 rounded-3 overflow-hidden @bgColor" style="aspect-ratio: 1/1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="@Model.SouthHall.TicketsList[i].Name @Model.SouthHall.TicketsList[i].Surname">
+                                    <a class="d-inline-block h-100 px-5" asp-controller="Ticket" asp-action="Edit" asp-route-hall="SouthHall" asp-route-id="@Model.SouthHall.TicketsList[i].Id">&nbsp;</a>
+                                </div>
                             }
                             else
                             {
