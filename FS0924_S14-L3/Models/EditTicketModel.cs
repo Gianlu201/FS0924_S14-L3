@@ -4,6 +4,8 @@ namespace FS0924_S14_L3.Models
 {
     public class EditTicketModel
     {
+        public Guid? Id { get; set; }
+
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Name is required!")]
         [StringLength(20, ErrorMessage = "max 20 chars", MinimumLength = 2)]

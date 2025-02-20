@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using FS0924_S14_L3.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -148,11 +149,15 @@ namespace FS0924_S14_L3.Controllers
                     {
                         var ticket = new EditTicketModel()
                         {
+                            Id = id,
                             Name = selectedTicket.Name,
                             Surname = selectedTicket.Surname,
                             Hall = selectedTicket.Hall,
+                            IsReducedStr = null,
                             IsReduced = selectedTicket.IsReduced,
                         };
+
+                        gestional?.NorthHall?.TicketsList?.Remove(selectedTicket);
 
                         return View(ticket);
                     }
@@ -167,11 +172,15 @@ namespace FS0924_S14_L3.Controllers
                     {
                         var ticket = new EditTicketModel()
                         {
+                            Id = id,
                             Name = selectedTicket.Name,
                             Surname = selectedTicket.Surname,
                             Hall = selectedTicket.Hall,
+                            IsReducedStr = null,
                             IsReduced = selectedTicket.IsReduced,
                         };
+
+                        gestional?.EastHall?.TicketsList?.Remove(selectedTicket);
 
                         return View(ticket);
                     }
@@ -186,11 +195,15 @@ namespace FS0924_S14_L3.Controllers
                     {
                         var ticket = new EditTicketModel()
                         {
+                            Id = id,
                             Name = selectedTicket.Name,
                             Surname = selectedTicket.Surname,
                             Hall = selectedTicket.Hall,
+                            IsReducedStr = null,
                             IsReduced = selectedTicket.IsReduced,
                         };
+
+                        gestional?.SouthHall?.TicketsList?.Remove(selectedTicket);
 
                         return View(ticket);
                     }
@@ -203,10 +216,75 @@ namespace FS0924_S14_L3.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost()]
-        public IActionResult EditTicket(SellTicketModel sellTicketModel)
+        [HttpPost("/Ticket/Edit/Save/{id:guid}")]
+        public IActionResult EditTicket(EditTicketModel editTicketModel, Guid id)
         {
             // TODO implementare modifica biglietto
+            if (!ModelState.IsValid)
+            {
+                TempData["ModelError"] = "Something went wrong, check your data!";
+                return RedirectToAction("Sell");
+            }
+
+            var reduced = editTicketModel.IsReducedStr == "true" ? true : false;
+
+            var newTicket = new Ticket()
+            {
+                Id = id,
+                Name = editTicketModel.Name,
+                Surname = editTicketModel.Surname,
+                Hall = editTicketModel.Hall,
+                IsReduced = reduced,
+            };
+
+            switch (editTicketModel.Hall)
+            {
+                case "North Hall":
+                    if (gestional.NorthHall?.TicketsList?.Count < 120)
+                    {
+                        gestional?.NorthHall?.TicketsList?.Add(newTicket);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Hall is full!";
+                        return RedirectToAction("Edit");
+                    }
+
+                case "East Hall":
+                    if (gestional.EastHall?.TicketsList?.Count < 120)
+                    {
+                        gestional?.EastHall?.TicketsList?.Add(newTicket);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Hall is full!";
+                        return RedirectToAction("Edit");
+                    }
+
+                case "South Hall":
+                    if (gestional.SouthHall?.TicketsList?.Count < 120)
+                    {
+                        gestional?.SouthHall?.TicketsList?.Add(newTicket);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Hall is full!";
+                        return RedirectToAction("Edit");
+                    }
+
+                default:
+                    break;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(string hall, Guid id)
+        {
             return RedirectToAction("Index");
         }
     }
